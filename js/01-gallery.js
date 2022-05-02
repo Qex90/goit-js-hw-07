@@ -25,13 +25,15 @@ refs.gallery.addEventListener("click", onGalleryClick);
 function onGalleryClick(e) {
   e.preventDefault();
   const img = e.target.dataset.source;
+  const alt = e.target.alt;
   const instance = basicLightbox.create(
     `<img
       src="${img}"
+      alt="${alt}"
     />`,
     {
       onShow: (instance) => {
-        document.addEventListener("keydown", onClickEscape);
+        window.addEventListener("keydown", onClickEscape);
 
         function onClickEscape(e) {
           if (e.key === "Escape") {
