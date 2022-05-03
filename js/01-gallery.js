@@ -27,21 +27,28 @@ function onGalleryClick(e) {
   const img = e.target.dataset.source;
   const alt = e.target.alt;
   const instance = basicLightbox.create(
-    `<img
-      src="${img}"
-      alt="${alt}"
-    />`,
+    `
+        <img class="modal"
+      src=${img}
+      alt=${alt}
+    />
+`,
     {
-      onShow: (instance) => {
-        window.addEventListener("keydown", onClickEscape);
+      onShow(instance) {
+        window.addEventListener("keydown", onEscKeydown);
+      },
 
-        function onClickEscape(e) {
-          if (e.key === "Escape") {
-            instance.close();
-          }
-        }
+      onClose(instance) {
+        window.removeEventListener("keydown", onEscKeydown);
       },
     }
   );
+
   instance.show();
+
+  function onEscKeydown(e) {
+    if (e.key === "Escape") {
+      instance.close();
+    }
+  }
 }
